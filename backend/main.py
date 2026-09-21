@@ -94,3 +94,58 @@ def get_space(space_id: str):
     if space is None:
         raise HTTPException(status_code=404, detail="Space not found")
     return space
+
+SUPPORTED_GUIDANCE_PROFILES = (
+    "visual_impairment",
+    "deaf_hard_of_hearing",
+    "reduced_mobility",
+)
+
+@app.get("/api/guidance/aula")
+def get_aula_guidance(profile: str):
+    if profile not in SUPPORTED_GUIDANCE_PROFILES:
+        raise HTTPException(status_code=400, detail="Unsupported profile")
+
+    infrastructure = {item["type"]: item for item in SPACES["aula"]["infrastructure"]}
+    entrance = infrastructure["entrance"]
+    stairs = infrastructure["stairs"]
+    emergency_exit = infrastructure["emergency_exit"]
+    ramp = infrastructure["ramp"]
+
+    if profile == "visual_impairment":
+        return {
+            "space_id": "aula",
+            "profile": profile,
+            "speakable": True,
+            "steps": [
+                f"Enter the Aula through the {entrance['name']}.",
+                f"Obstacle ahead: the {stairs['name']} are a barrier and are not step-free; do not use them.",
+                f"If you need to leave urgently, head to the {emergency_exit['name']}.",
+                f"For a safe step-free path, follow the {ramp['name']}.",
+            ],
+        }
+
+    if profile == "deaf_hard_of_hearing":
+        return {
+            "space_id": "aula",
+            "profile": profile,
+            "visual_alerts": True,
+            "steps": [
+                f"Follow the visual signage from the {entrance['name']}.",
+                f"Emergency information: the {emergency_exit['name']} is clearly marked with visible signage; watch for flashing visual alarm indicators.",
+                f"The {stairs['name']} and the {ramp['name']} are both signposted with text and symbols.",
+            ],
+        }
+
+    # reduced_mobility
+    return {
+        "space_id": "aula",
+        "profile": profile,
+        "avoid_stairs": True,
+        "steps": [
+            f"Enter using the {entrance['name']}, which is step-free and accessible.",
+            f"Avoid the {stairs['name']}.",
+            f"Use the {ramp['name']} to move through the Aula.",
+            f"If evacuation is needed, the {emergency_exit['name']} is step-free and accessible.",
+        ],
+    }
