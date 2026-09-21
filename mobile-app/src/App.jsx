@@ -5,6 +5,8 @@ import { ProfileSelection } from './pages/ProfileSelection.jsx';
 import { Institutions } from './pages/Institutions.jsx';
 import { InstitutionDetail } from './pages/InstitutionDetail.jsx';
 import { AccessibleMode } from './pages/AccessibleMode.jsx';
+import { InstitutionHome } from './pages/institution/InstitutionHome.jsx';
+import { AulaSpace } from './pages/institution/AulaSpace.jsx';
 
 function App() {
   const path = useHashRoute();
@@ -22,6 +24,12 @@ function App() {
     }
     if (path === '/aula') {
       return <AccessibleMode profileId={profileId} onSelect={selectProfile} />;
+    }
+    if (path === '/portal/aula') {
+      return <AulaSpace />;
+    }
+    if (path === '/portal') {
+      return <InstitutionHome />;
     }
     return <Landing />;
   }

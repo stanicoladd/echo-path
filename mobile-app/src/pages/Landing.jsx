@@ -1,13 +1,10 @@
-import { useState } from 'react';
 import { Icon } from '../components/Icon.jsx';
 import { navigate } from '../router/useHashRoute.js';
 
 // Screen 1 — Landing. ECHO PATH branding + two roles.
-// Visitor continues into the user flow; Institution is handled by the separate
-// admin dashboard (out of scope for this app), so we explain that inline.
+// Both roles live in this one app: Visitor enters the personalized guidance
+// flow; Institution enters the Institution Portal.
 export function Landing() {
-  const [showInstitutionNote, setShowInstitutionNote] = useState(false);
-
   return (
     <main className="page page--landing" id="main">
       <div className="landing__hero">
@@ -42,28 +39,20 @@ export function Landing() {
         <button
           type="button"
           className="role-card"
-          aria-expanded={showInstitutionNote}
-          onClick={() => setShowInstitutionNote((v) => !v)}
+          onClick={() => navigate('/portal')}
         >
           <span className="role-card__icon">
-            <Icon name="entrance" size={34} />
+            <Icon name="university" size={34} />
           </span>
           <span className="role-card__text">
             <span className="role-card__title">Institution</span>
             <span className="role-card__sub">
-              Publish accessibility information
+              Publish and manage accessibility information
             </span>
           </span>
           <Icon name="right" size={24} className="role-card__go" />
         </button>
       </div>
-
-      {showInstitutionNote ? (
-        <p className="landing__note" role="status">
-          The Institution portal is a separate admin dashboard. This app is the
-          visitor experience — choose <strong>Visitor</strong> to continue.
-        </p>
-      ) : null}
 
       <p className="landing__footnote">
         Navigation guidance in this demo is a manual simulation, not live indoor

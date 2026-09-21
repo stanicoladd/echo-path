@@ -1,12 +1,16 @@
-# ECHO PATH — Visitor App (`/mobile-app`)
+# ECHO PATH — Unified Mobile App (`/mobile-app`)
 
-Mobile-first web app for the ECHO PATH visitor experience. Institutions publish
-accessibility information about a physical space; visitors pick an accessibility
-profile and receive a personalized, manually-advanced navigation simulation of
-the same space.
+One mobile-first web app for the whole ECHO PATH experience. From the landing
+screen you pick a role:
 
-This is **Developer 1**'s component. It owns only `/mobile-app` and does not
-touch `/backend`, `/admin-dashboard`, or the repository root `README.md`.
+- **Visitor** — pick an accessibility profile and receive a personalized,
+  manually-advanced navigation simulation of a space (the SBE Aula).
+- **Institution** — an Institution Portal where Maastricht University reviews
+  its faculties, the mapped Aula space, its accessibility infrastructure, and a
+  3D mapping preview.
+
+Both sides live in this single app and share the same visual language. It does
+not touch `/backend` or the repository root `README.md`.
 
 ## Stack
 
@@ -33,10 +37,9 @@ npm run lint     # oxlint
 npm run preview  # serve the production build locally
 ```
 
-## User flow
+## Visitor flow
 
 1. **Landing** — ECHO PATH branding with `Visitor` / `Institution` roles.
-   Visitor continues.
 2. **Profile** — choose one of exactly three profiles (saved to `localStorage`):
    Visual Impairment, Deaf / Hard of Hearing, Wheelchair / Reduced Mobility.
 3. **Institutions** — Maastricht University SBE is *Echo Path Enabled*; UMC+,
@@ -49,6 +52,23 @@ npm run preview  # serve the production build locally
    browser text-to-speech (`Speak`), which is hidden when unsupported.
 
 > The walking guidance is an explicit simulation, not real indoor positioning.
+
+## Institution flow
+
+1. **Landing** → **Institution**.
+2. **Institution Portal** (`#/portal`) — Maastricht University overview, summary
+   stats, and the six faculties (FASoS, FHML, LAW, FPN, FSE = *Not mapped*;
+   **SBE** = *Active / Mapped*). A badge shows whether data is *Live API* or
+   *Demo data*.
+3. **Aula space** (`#/portal/aula`) — tap SBE to open the Aula: status badges
+   (`3D Mapped`, `Accessibility Mapping: Active`), demo-only `Scan New Space`
+   and `Add Infrastructure` actions, the four infrastructure cards (entrance,
+   stairs = barrier, emergency exit, ramp), and a **3D Mapping** preview with a
+   *3D Map Available* indicator.
+
+The Institution Portal reads data from `src/services/institutionApi.js`, which
+is mock-first (same shape as `GET /api/institutions/maastricht-university` and
+`GET /api/spaces/aula`) so the demo works with no backend.
 
 ## Backend integration (not enabled yet)
 
