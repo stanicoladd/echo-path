@@ -8,6 +8,16 @@ repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 # --- backend (FastAPI / Python) ---
 if [ -f "$repo_root/backend/requirements.txt" ]; then
   echo "[install] Setting up backend Python environment"
+
+  # The default base image may ship Python without the venv/ensurepip module.
+  # Install it on demand so `python3 -m venv` works on a fresh VM.
+  if ! python3 -c "import ensurepip" >/dev/null 2>&1; then
+    echo "[install] python3 venv support missing; installing it"
+    pyver="$(python3 -c 'import sys; print(f"{sys.version_info[0]}.{sys.version_info[1]}")')"
+    sudo apt-get update -y
+    sudo apt-get install -y "python${pyver}-venv" || sudo apt-get install -y python3-venv
+  fi
+
   cd "$repo_root/backend"
   python3 -m venv venv
   ./venv/bin/python -m pip install --upgrade pip
