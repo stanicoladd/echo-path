@@ -1,0 +1,22 @@
+---
+description: Project-wide conventions and structure for the echo-path monorepo
+globs:
+alwaysApply: true
+---
+
+# echo-path
+
+echo-path is a single Git repository (monorepo) containing multiple, related
+components. Do not split these into separate repositories.
+
+## Repository structure
+
+- `mobile-app/` — mobile client application.
+- `smart-door-infra/` — infrastructure and deployment for the smart-door system.
+- `backend/` — backend services and APIs.
+
+## Conventions
+
+- Keep all components inside this repository.
+- Each top-level component owns its own dependencies, configuration, and tests.
+- Prefer clear, self-contained changes scoped to a single component when possible.
