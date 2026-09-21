@@ -61,6 +61,12 @@ SPACES = {
         "name": "Aula",
         "faculty_id": "sbe",
         "mapped_3d": True,
+        "model_3d": {
+            "available": True,
+            "format": "glb",
+            "filename": "21_9_2026.glb",
+            "source": "3D scan captured during the hackathon",
+        },
         "infrastructure": [
             {
                 "id": "main-aula-entrance",
