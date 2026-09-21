@@ -44,3 +44,53 @@ def get_institution(institution_id: str):
     if institution is None:
         raise HTTPException(status_code=404, detail="Institution not found")
     return institution
+
+SPACES = {
+    "aula": {
+        "id": "aula",
+        "name": "Aula",
+        "faculty_id": "sbe",
+        "mapped_3d": True,
+        "infrastructure": [
+            {
+                "id": "main-aula-entrance",
+                "type": "entrance",
+                "name": "Main Aula Entrance",
+                "accessible": True,
+                "location": "",
+                "notes": "",
+            },
+            {
+                "id": "main-aula-stairs",
+                "type": "stairs",
+                "name": "Main Aula Stairs",
+                "accessible": False,
+                "location": "",
+                "notes": "",
+            },
+            {
+                "id": "aula-emergency-exit",
+                "type": "emergency_exit",
+                "name": "Aula Emergency Exit",
+                "accessible": True,
+                "location": "",
+                "notes": "",
+            },
+            {
+                "id": "aula-accessible-route",
+                "type": "ramp",
+                "name": "Aula Accessible Route",
+                "accessible": True,
+                "location": "",
+                "notes": "",
+            },
+        ],
+    },
+}
+
+@app.get("/api/spaces/{space_id}")
+def get_space(space_id: str):
+    space = SPACES.get(space_id)
+    if space is None:
+        raise HTTPException(status_code=404, detail="Space not found")
+    return space
