@@ -65,7 +65,7 @@ SPACES = {
             "available": True,
             "format": "glb",
             "filename": "21_9_2026.glb",
-            "source": "3D scan captured during the hackathon",
+            "source": "3D scan of the SBE Aula captured during the hackathon",
         },
         "infrastructure": [
             {
